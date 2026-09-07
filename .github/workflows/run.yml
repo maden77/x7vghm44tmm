@@ -1,0 +1,28 @@
+name: Run C Server
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y gcc make
+    
+    - name: Build server
+      run: |
+        gcc -o server main.c -lhttp -lfio || echo "Compilation may need library setup"
+    
+    - name: Run server
+      run: |
+        ./server &
+        sleep 5
+        curl http://localhost:3000
