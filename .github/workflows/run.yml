@@ -15,14 +15,18 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt update
-        sudo apt install -y gcc make
+        sudo apt install -y gcc
     
-    - name: Build server
+    - name: Compile server
       run: |
-        gcc -o server main.c -lhttp -lfio || echo "Compilation may need library setup"
+        gcc -o server main.c -pthread
+        ls -la server
     
     - name: Run server
       run: |
         ./server &
-        sleep 5
-        curl http://localhost:3000
+        sleep 2
+    
+    - name: Test server
+      run: |
+        curl -v http://localhost:3000
