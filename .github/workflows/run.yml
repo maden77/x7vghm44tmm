@@ -1,4 +1,4 @@
-name: Run C Server
+name: Run C Server 
 
 on:
   push:
